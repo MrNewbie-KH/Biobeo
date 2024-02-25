@@ -4,7 +4,7 @@ const RouteModel = require('../Models/routeModel');
 exports.listRoutes = async (req, res) => {
     const routes =await RouteModel.getAllRoutes()
     console.log(routes);
-    res.send(routes);
+    res.send(routes[0]);
 };
 
 // Yeni rota oluşturma

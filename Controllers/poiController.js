@@ -51,7 +51,7 @@ exports.getPOIsByRoute = async (req, res) => {
 
   // Rota ID'sine göre POI'leri getir
   const data = await POIModel.getPOIsByRoute(routeId);
-  res.status(200).json({ routes: data });
+  res.status(200).json({ data });
 };
 
 // Belirli bir POI'yi güncelle
