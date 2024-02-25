@@ -5,11 +5,15 @@ const jwt = require('jsonwebtoken');
 exports.register = async (req, res) => {
     const { username } = req.body;
     
+ 
     if (!username) {
+
         return res.status(400).send({ message: "User name must be provided" });
     }
     
     try {
+        console.log("aza");
+        console.log(username);
         // check if this user already in the database
         const user = await UserModel.findUserByUsername(username);
 
