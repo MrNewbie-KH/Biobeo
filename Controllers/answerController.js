@@ -21,16 +21,15 @@ exports.submitCompleteQuiz = async (req, res) => {
   // --------------------------------------------------
   // get  questions related to the current point
   const quizes = await QuizModel.getQuizzesByPOI(poiId);
-    let score = 0;
-    // console.log(quizes[0].length);
-    const totalCorrect = quizes[0].forEach((question, index) => {
-      const correct = question.correct_option; //correct answer
-      if (answers[index].selected_option === correct) {
+  let score = 0;
+    const totalCorrect = answers.forEach((answer, index) => {
+      const answerByUser = answer.selected_option; 
+      if (quizes[0][index].correct_option === answerByUser) {
         score++;
       }
       // scores added successfully
-      // UserPoi.createUserPOI(poiId, userId, score);
+      UserPoi.createUserPOI(poiId, userId, score);
     });
 
-  res.status(200).json({ message: "Answers submitted successfully" });
+  res.status(200).json({ message: "Answers submitted successfully",score,"total questions":quizes[0].length },);
 };
