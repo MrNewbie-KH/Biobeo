@@ -47,3 +47,6 @@ status
 get status for all -> return username poi score 
 ---
 
+/api/statistics
+topScores
+allScores

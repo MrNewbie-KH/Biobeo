@@ -27,9 +27,7 @@ exports.submitCompleteQuiz = async (req, res) => {
       if (quizes[0][index].correct_option === answerByUser) {
         score++;
       }
-      // scores added successfully
-      UserPoi.createUserPOI(poiId, userId, score);
     });
-
+    UserPoi.createUserPOI(poiId, userId, score);
   res.status(200).json({ message: "Answers submitted successfully",score,"total questions":quizes[0].length },);
 };

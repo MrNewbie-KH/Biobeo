@@ -42,15 +42,20 @@ exports.getTopVisitedRoutes = (req, res) => {
     });
 };
 
-exports.getTopScores = (req, res) => {
-    const limit = req.query.limit || 10; // Varsayılan olarak 10 kullanıcıyı getir
-    StatisticsModel.getTopScores(limit, (error, data) => {
-        if (error) {
+exports.getTopScores = async (req, res) => {
+    const limit = req.query.limit || 5; // Varsayılan olarak 10 kullanıcıyı getir
+    try {
+        const top = await  StatisticsModel.getTopScores(limit)
+        res.status(200).json(top);
+   } catch (error) {
             res.status(500).send({
                 message: error.message || "Some error occurred while retrieving top scores."
             });
-        } else {
-            res.send(data);
         }
-    });
 };
+exports.getAllScores = async (req,res)=>{
+const allData = await StatisticsModel.getAllScores();
+console.log(allData);
+res.status(200).json(allData)
+}
+// getTopScores/
