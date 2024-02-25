@@ -41,7 +41,7 @@ to get all questions **"SELECT \* FROM QUIZZES WHERE POIID=?"**
 each quiz aka question has one correct answer stored in
 
 ---
-new schema
+- [x] new schema
 status
 "username unique" "pois"
 get status for all -> return username poi score 

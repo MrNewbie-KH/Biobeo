@@ -17,19 +17,19 @@ Quiz.createQuiz = async (newQuiz, result) => {
   }
 };
 
-Quiz.getQuizzesByPOI = async (poiId, result) => {
+Quiz.getQuizzesByPOI = async (poiId) => {
   try {
     const res = await db.query("SELECT * FROM Quizzes WHERE poi_id = ?", [
       poiId,
     ]);
-    console.log("quizzes: ", res);
-    result(null, res[0]); //res[0] to only return the data no garbage
+    return res;
   } catch (error) {
     console.log("error: ", error);
-    result(null, error);
-    return;
+    throw new Error(error)
   }
 };
+
+// What I worked on uptil now
 
 Quiz.deleteQuiz = async (quizId, result) => {
   try {
