@@ -11,8 +11,8 @@ Quiz.createQuiz = async (newQuiz, result) => {
     console.log("created quiz: ", { id: data.insertId, ...newQuiz });
     result(null, { id: data.insertId, ...newQuiz });
   } catch (error) {
-    console.log("error: ", err);
-    result(err, null);
+    console.log("error: ", error);
+    result(error, null);
     return;
   }
 };
