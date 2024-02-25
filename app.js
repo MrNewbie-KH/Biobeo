@@ -27,11 +27,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(async (req, res, next) => {
     const protectedRoutes = [
-        '/api/routes',
-        '/api/pois',
-        '/api/quizzes',
+        // '/api/routes',
+        // '/api/pois',
+        // '/api/quizzes',
         '/api/answers',
-        '/api/statistics/totalVisitedPOIs'
+        // '/api/statistics/totalVisitedPOIs'
     ];
 
     // Sadece belirli rotalarda token kontrolü yap

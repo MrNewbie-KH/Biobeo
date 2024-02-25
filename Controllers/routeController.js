@@ -8,7 +8,7 @@ exports.listRoutes = (req, res) => {
                 message: "Error retrieving routes"
             });
         } else {
-            res.send(routes);
+            res.send(routes[0]);
         }
     });
 };
