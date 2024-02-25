@@ -9,7 +9,7 @@ router.get('/', poiController.getAllPOIs);
 router.post('/', poiController.createPOI);
 
 // Belirli bir rota ID'sine göre POI'leri listele
-router.get('/route/:routeId', poiController.getPOIsByRoute);
+router.get('/:routeId', poiController.getPOIsByRoute);
 
 // Belirli bir POI'yi güncelle
 router.put('/:poiId', poiController.updatePOI);

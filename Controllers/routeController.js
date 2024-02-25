@@ -1,21 +1,15 @@
 const RouteModel = require('../Models/routeModel');
 
 // Rota listeleme
-exports.listRoutes = (req, res) => {
-    RouteModel.getAllRoutes((error, routes) => {
-        if (error) {
-            res.status(500).send({
-                message: "Error retrieving routes"
-            });
-        } else {
-            res.send(routes[0]);
-        }
-    });
+exports.listRoutes = async (req, res) => {
+    const id = req.params.routeId;
+    const routes =await RouteModel.getAllRoutes(id)
+    res.send(routes[0]);
 };
 
 // Yeni rota oluşturma
 exports.createRoute = (req, res) => {
-    const { name, description, photo, city } = req.body;
+    const { name, description, photo, city,is_adult } = req.body;
 
     if (!name) {
         return res.status(400).send({
@@ -27,7 +21,8 @@ exports.createRoute = (req, res) => {
         name,
         description,
         photo,
-        city
+        city,
+        is_adult
     };
 
     RouteModel.createRoute(newRoute, (error, data) => {
