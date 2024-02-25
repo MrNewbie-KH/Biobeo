@@ -65,7 +65,6 @@ Statistics.getTopVisitedRoutes = (limit, result) => {
     );
 };
 
-
 Statistics.getTopScores = (limit, result) => {
     db.query(
         "SELECT user_id, SUM(score) AS total_score FROM Answers GROUP BY user_id ORDER BY total_score DESC LIMIT ?",
