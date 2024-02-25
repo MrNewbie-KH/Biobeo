@@ -2,10 +2,11 @@ const db = require("../Config/dbConfig");
 
 const Route = {};
 
-Route.getAllRoutes = async (id) => {
+Route.getAllRoutes = async () => {
   try {
-    const res = await db.query("SELECT * FROM Routes WHERE id = ?", [id]);
+    const res = await db.query("SELECT * FROM Routes");
     console.log("routes: ", res);
+    return res.length ? res : 0 
   } catch (error) {
     console.log("error: ", error);
   }

@@ -2,9 +2,9 @@ const RouteModel = require('../Models/routeModel');
 
 // Rota listeleme
 exports.listRoutes = async (req, res) => {
-    const id = req.params.routeId;
-    const routes =await RouteModel.getAllRoutes(id)
-    res.send(routes[0]);
+    const routes =await RouteModel.getAllRoutes()
+    console.log(routes);
+    res.send(routes);
 };
 
 // Yeni rota oluşturma
