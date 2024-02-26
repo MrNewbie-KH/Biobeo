@@ -5,25 +5,22 @@ const Route = {};
 Route.getAllRoutes = async () => {
   try {
     const res = await db.query("SELECT * FROM Routes");
-    console.log("routes: ", res);
-    return  res ; 
+    return res[0];
   } catch (error) {
     console.log("error: ", error);
+    throw error;
   }
 };
 
-Route.createRoute = async (newRoute, result) => {
+
+Route.createRoute = async (newRoute) => {
   try {
-    const res = db.query("INSERT INTO Routes SET ?", newRoute);
-    console.log("created route: ", { id: res.insertId, ...newRoute });
-    result(null, { id: res.insertId, ...newRoute });
+    await db.query("INSERT INTO Routes SET ?", newRoute);
   } catch (error) {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
-    }
+    console.log("error :", error);
+    throw error;
   }
+
 };
 
 Route.updateRoute = (updatedRoute, result) => {

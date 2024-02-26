@@ -9,23 +9,17 @@ UserPoi.createUserPOI = async (poiId, userId, score) => {
     score: score,
   };
   try {
-    const res = await db.query("INSERT INTO User_POI_Visits SET ?", newVisit);
-
-    console.log("Visited POI: ", { id: res.insertId, ...newVisit });
+    await db.query("INSERT INTO User_POI_Visits SET ?", newVisit);
   } catch (error) {
-    console.log("error: ", error);
-    throw new Error(error);
+    throw error
   }
 };
-UserPoi.getAllUserPOIs = async (result) => {
+UserPoi.getAllUserPOIs = async () => {
   try {
     const res = await db.query("SELECT * FROM POIs");
-    console.log("POIs: ", res);
-    result(null, res);
+    return res[0];
   } catch (error) {
-    console.log("error: ", err);
-    result(null, err);
-    return;
+    throw error
   }
 };
 

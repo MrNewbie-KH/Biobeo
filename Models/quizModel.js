@@ -4,16 +4,11 @@ const db = require("../Config/dbConfig");
 
 const Quiz = {};
 
-Quiz.createQuiz = async (newQuiz, result) => {
+Quiz.createQuiz = async (newQuiz)=> {
   try {
-    const data = await db.query("INSERT INTO Quizzes SET ?", newQuiz);
-
-    console.log("created quiz: ", { id: data.insertId, ...newQuiz });
-    result(null, { id: data.insertId, ...newQuiz });
+    await db.query("INSERT INTO Quizzes SET ?", newQuiz);
   } catch (error) {
-    console.log("error: ", error);
-    result(error, null);
-    return;
+    throw error
   }
 };
 
@@ -22,14 +17,13 @@ Quiz.getQuizzesByPOI = async (poiId) => {
     const res = await db.query("SELECT * FROM Quizzes WHERE poi_id = ?", [
       poiId,
     ]);
-    return res;
+    return res[0];
   } catch (error) {
-    console.log("error: ", error);
-    throw new Error(error)
+    throw error
   }
 };
 
-// What I worked on uptil now
+// ----------------------------------------
 
 Quiz.deleteQuiz = async (quizId, result) => {
   try {

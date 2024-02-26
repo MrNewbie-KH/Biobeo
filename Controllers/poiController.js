@@ -1,6 +1,6 @@
 const POIModel = require("../Models/poiModel");
 
-exports.createPOI = (req, res) => {
+exports.createPOI = async (req, res) => {
   // Request body'den POI bilgilerini al
   const { route_id, name, latitude, longitude, description } = req.body;
 
@@ -18,31 +18,29 @@ exports.createPOI = (req, res) => {
     latitude,
     longitude,
     description,
-    // photo
   };
 
   // Modeli kullanarak yeni POI'yi veritabanına kaydet
-  POIModel.createPOI(newPOI, (error, data) => {
-    if (error) {
-      res.status(500).send({
-        message: error.message || "Some error occurred while creating the POI.",
-      });
-    } else {
-      res.send(data);
-    }
-  });
+  try {
+    await POIModel.createPOI(newPOI);
+    res.status(200).send({ messgae: "New point added successfully" });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message || "Some error occurred while creating the POI.",
+    });
+  }
 };
 
-exports.getAllPOIs = (req, res) => {
-  POIModel.getAllPOIs((error, data) => {
-    if (error) {
-      res.status(500).send({
-        message: error.message || "Some error occurred while retrieving POIs.",
-      });
-    } else {
-      res.send(data[0]);
-    }
-  });
+exports.getAllPOIs = async (req, res) => {
+  try {
+    const data = await POIModel.getAllPOIs();
+    res.status(200).send(data);
+
+  } catch (error) {
+    res.status(500).send({
+      message: "Some error occurred while retrieving POIs.",
+    });
+  }
 };
 
 // Belirli bir rota ID'sine göre POI'leri listele
@@ -50,9 +48,20 @@ exports.getPOIsByRoute = async (req, res) => {
   const routeId = req.params.routeId;
 
   // Rota ID'sine göre POI'leri getir
-  const data = await POIModel.getPOIsByRoute(routeId);
-  res.status(200).json({ data });
+  try {
+    const data = await POIModel.getPOIsByRoute(routeId);
+    if(data.length)
+    res.status(200).send(data);
+  else
+  res.status(200).json({message:"No Points in this route"});
+  } catch (error) {
+    res.status(500).send({
+      message: "Some error occurred while getting POIs via route.",
+    });
+  }
 };
+
+// -------------------------------------------------------
 
 // Belirli bir POI'yi güncelle
 exports.updatePOI = (req, res) => {

@@ -4,10 +4,23 @@ const Answer = {};
 
 // Create Answer related to a question
 Answer.submitAnswer = async (newAnswer) => {
-  await db.query(
-    "INSERT INTO Answers (quiz_id,user_id,selected_option) VALUES (?)",
-    [[newAnswer.quiz_id, newAnswer.user_id, newAnswer.selected_option]]
-  );
+  try {
+    // const obj = {
+    //   user_id: userId,
+    //   quiz_id: answer.quiz_id,
+    //   selected_option: answer.selected_option,
+    // };
+    // const alreadyAnswered = await db.query()
+    //====================================
+    // no update for old just insert new 
+    //====================================
+    await db.query(
+      "INSERT INTO Answers (quiz_id,user_id,selected_option) VALUES (?)",
+      [[newAnswer.quiz_id, newAnswer.user_id, newAnswer.selected_option]]
+    );
+  } catch (error) {
+    throw error;
+  }
 };
 // this can be useful for calculating total score of the user
 Answer.getAnswersByUser = async (userId) => {
@@ -19,7 +32,7 @@ Answer.getAnswersByUser = async (userId) => {
     return res[0];
   } catch (error) {
     console.log("error: ", error);
-    throw new Error(error)
+    throw new Error(error);
   }
 };
 Answer.getAnswersPerQuiz = async (userId, result) => {

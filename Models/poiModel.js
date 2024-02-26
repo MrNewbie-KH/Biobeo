@@ -1,31 +1,39 @@
 const db = require("../Config/dbConfig");
 
 const POI = {};
-
-POI.createPOI = async (newPOI, result) => {
+// poi model create
+POI.createPOI = async (newPOI) => {
   try {
-    const res = await db.query("INSERT INTO POIs SET ?", newPOI);
-
-    console.log("created POI: ", { id: res.insertId, ...newPOI });
-    result(null, { id: res.insertId, ...newPOI });
+    await db.query("INSERT INTO POIs SET ?", newPOI);
   } catch (error) {
-    console.log("error: ", err);
-    result(err, null);
-    return;
+    throw error;
   }
 };
 
-POI.getAllPOIs = async (result) => {
+// get all points
+POI.getAllPOIs = async () => {
   try {
     const res = await db.query("SELECT * FROM POIs");
-    console.log("POIs: ", res);
-    result(null, res);
+    return res[0];
   } catch (error) {
-    console.log("error: ", err);
-    result(null, err);
-    return;
+    throw error;
   }
 };
+
+// Get POIs by route
+POI.getPOIsByRoute = async (routeId) => {
+  try {
+    const res = await db.query(
+      "SELECT * FROM POIs WHERE route_id = ?",
+      routeId
+    );
+    return res[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+// ---------------------------------------------
 
 // Belirli bir POI'yi güncelle
 POI.updatePOI = (poiId, updatedPOI, result) => {
@@ -55,13 +63,6 @@ POI.deletePOI = (poiId, result) => {
     console.log("deleted POI with id: ", poiId);
     result(null, res);
   });
-};
-
-// Get POIs by route
-POI.getPOIsByRoute = async (routeId) => {
-  const res = await db.query("SELECT * FROM POIs WHERE route_id = ?", routeId);
-  console.log("POIs by route: ", res);
-  return res[0];
 };
 
 module.exports = POI;

@@ -69,6 +69,8 @@ Statistics.getTopVisitedRoutes = (limit, result) => {
   );
 };
 
+// --------------------------------------
+// --------------------------------------
 Statistics.getTopScores = async (limit) => {
   try {
     const topUsersScores = await db.query(

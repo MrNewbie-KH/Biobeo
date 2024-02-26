@@ -3,8 +3,7 @@ const db = require("../Config/dbConfig");
 const QuizModel = require("../Models/quizModel");
 const UserPoi = require("../Models/userPoiModel");
 
-// two different scenarios
-// first solve the quiz
+
 exports.submitCompleteQuiz = async (req, res) => {
   const userId = req.userId;
   const { poiId, answers } = req.body;
@@ -21,13 +20,17 @@ exports.submitCompleteQuiz = async (req, res) => {
   // --------------------------------------------------
   // get  questions related to the current point
   const quizes = await QuizModel.getQuizzesByPOI(poiId);
+  if(quizes.length===0){
+    res.status(200).json({message:"This point has no questions yet"})
+    return;
+  }
   let score = 0;
-    const totalCorrect = answers.forEach((answer, index) => {
+      answers.forEach((answer, index) => {
       const answerByUser = answer.selected_option; 
-      if (quizes[0][index].correct_option === answerByUser) {
+      if (quizes[index].correct_option === answerByUser) {
         score++;
       }
     });
-    UserPoi.createUserPOI(poiId, userId, score);
-  res.status(200).json({ message: "Answers submitted successfully",score,"total questions":quizes[0].length },);
+    await UserPoi.createUserPOI(poiId, userId, score);
+  res.status(200).json({ message: "Answers submitted successfully",score,"total questions":quizes.length },);
 };
