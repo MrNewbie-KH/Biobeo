@@ -47,7 +47,8 @@ exports.login = async (req, res) => {
     if (user.length===0) {
       return res.status(400).send({ message: "No user with this username, please sign up" });
     }
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+    console.log(user[0]);
+    const token = jwt.sign({ id: user[0].id }, process.env.JWT_SECRET);
     res.status(200).json({...user[0], token }); 
   } catch (error) {
     res.status(500).send({
@@ -55,3 +56,4 @@ exports.login = async (req, res) => {
     });
   }
 };
+
