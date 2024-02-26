@@ -25,9 +25,11 @@ User.getAllUsers = async () => {
 };
 
 User.findUserByUsername = async (username) => {
+  console.log("Inside find user by id");
 
 const data = await db.query(
     `SELECT * FROM Users WHERE username = ?`,[username])  
+    console.log(data[0]);
     return data[0];
 };
 User.findUserById = async (id) => {
