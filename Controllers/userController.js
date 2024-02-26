@@ -12,17 +12,22 @@ exports.register = async (req, res) => {
 
   try {
     // check if this user already in the database
+    // test
+    console.log("Before first time to db");
     const user = await UserModel.findUserByUsername(username);
     if (user.length) {
       return res.status(409).send({ message: "Username is already in use." });
     }
+    console.log("after first time to db");
     const newUserToAdd = {
       username,
     };
     // create user
      await UserModel.createUser(newUserToAdd);
     // create token for the user
+
     const user2 = await UserModel.findUserByUsername(username);
+
     const token = jwt.sign({ id: user2[0].id }, process.env.JWT_SECRET);
     res.status(200).json({...user2[0], token }); // to look what it looks like at the front
   } catch (error) {
