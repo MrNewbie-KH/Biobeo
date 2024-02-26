@@ -7,13 +7,15 @@ const {promisify}=require("util")
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+    
     if(!token){
       return res.status(401).json({message:"Un authorized access to tken available"})
     }
     try {
       const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET)
-         req.userId=decoded.id;
-         console.log(decoded);
+      console.log(decoded);   
+      req.userId=decoded.id;
+         console.log(req.userId);
          return next();
       
     } catch (error) {

@@ -23,7 +23,7 @@ exports.register = async (req, res) => {
      await UserModel.createUser(newUserToAdd);
     // create token for the user
     const user2 = await UserModel.findUserByUsername(username);
-    const token = jwt.sign({ id: user2.id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ id: user2[0].id }, process.env.JWT_SECRET);
     res.status(200).json({...user2[0], token }); // to look what it looks like at the front
   } catch (error) {
     res.status(500).send({
@@ -55,5 +55,8 @@ exports.login = async (req, res) => {
       message: "Some error occurred while creating the User.",
     });
   }
+
+
+
 };
 

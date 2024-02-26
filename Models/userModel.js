@@ -27,8 +27,16 @@ User.getAllUsers = async () => {
 User.findUserByUsername = async (username) => {
 
 const data = await db.query(
-    `SELECT * FROM Users WHERE username = ?`,username)  
+    `SELECT * FROM Users WHERE username = ?`,[username])  
+    return data[0];
+};
+User.findUserById = async (id) => {
+
+const data = await db.query(
+    `SELECT * FROM Users WHERE id = ?`,[id]) 
+    console.log(data[0]); 
     return data[0];
 };
 
 module.exports = User;
+
