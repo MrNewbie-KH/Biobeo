@@ -30,6 +30,10 @@ app.use("/api/quizzes", quizRoutes); // Quiz için oluşturduğunuz rota
 app.use("/api/answers", answerRoutes); // Cevaplar için oluşturduğunuz rota
 app.use("/api/statistics", statisticsRoutes); // İstatistikler için rota
 
+console.log(  process.env.HOST_NAME,
+ process.env.USER_NAME,
+  process.env.PW,
+ process.env.DB_NAME);
 // Server'ın başlatılması
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
