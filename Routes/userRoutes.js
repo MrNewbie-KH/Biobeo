@@ -7,5 +7,7 @@ router.post('/register', userController.register);
 
 // Kullanıcı girişi
 router.post('/login', userController.login);
+router.post('/signup',userController.signup)
+router.post('/teacherLogin',userController.teacherLogin)
 
 module.exports = router;

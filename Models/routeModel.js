@@ -5,6 +5,7 @@ const Route = {};
 Route.getAllRoutes = async () => {
   try {
     const res = await db.query("SELECT * FROM Routes");
+    console.log(res[0]);
     return res[0];
   } catch (error) {
     console.log("error: ", error);
