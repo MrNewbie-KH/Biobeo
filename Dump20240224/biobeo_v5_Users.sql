@@ -5,7 +5,9 @@ CREATE TABLE `Users` (
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `role` enum('teacher','student') NOT NULL DEFAULT 'student',
-  `total_score` int DEFAULT NULL,
+  `points` int DEFAULT NULL,
+  `photo_URL` varchar int DEFAULT NULL,
+  `completed_routes` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) 
